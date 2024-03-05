@@ -26,14 +26,12 @@ export class JournalService {
 
   async updateJournal(inp: UpdateJournalDTO, id: string) {
     const res = await this.journalRepo.update(id, { ...inp });
-    console.log('res', res);
     return 'success';
   }
 
   async deleteJournal(id: string) {
     const res = await this.journalRepo.delete(id);
-    console.log('res', res);
-
+    console.log('response');
     return 'success';
   }
 }
