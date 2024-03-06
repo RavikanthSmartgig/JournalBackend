@@ -1,0 +1,68 @@
+Deployement using Docker and Git
+
+Step1: Create an Ubuntu EC2-Instance 
+
+Step2: Open Mobaxterm and connect to EC2 Instance
+
+Step3: sudo apt update 
+       sudo apt upgrade -y 
+
+Step4: Download Docker:
+       Step1: https://get.docker.com/
+       Step2: Copy the curl -fsSL https://get.docker.com -o install-docker.sh
+       Step3: Run ----> sh install-docker.sh
+       Step4: Run ----> sudo usermod -aG docker ubuntu
+       Step5: exit
+       Step6: Relogin your instance
+
+Step5: mkdir <your-choice-name>
+
+Step6: cd <your-choice-name>
+
+Step7: git clone <url>
+
+Step8: vim Dockerfile 
+
+# Base image
+FROM docker.io/node:lts-alpine
+
+# Create app directory
+WORKDIR /usr/src/app
+
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+COPY package*.json ./
+
+# Install app dependencies
+RUN npm install
+
+# Bundle app source
+COPY . .
+
+# Creates a "dist" folder with the production build
+RUN npm run build
+
+# Start the server using the production build
+CMD [ "node", "dist/main.js" ]
+
+Step9: Run ----> docker build -t <your-choice-imagename> .
+//opt1: navigate to the path and build the image
+//opt2: docker build -t <your-choice-imagename> /path/path
+
+Step10: Create a container 
+        docker run -itd --name <container-name> -p 80:3002 <image-name>
+
+Step11: Additional commands 
+        docker images -----> To list all the images 
+        docker ps     -----> To list all the running containers
+        docker ps -a  -----> To list all the the containers
+        docker rmi <image-name>---> To remove a image 
+        docker rmi $(docker images -q) ---> To remove all images at once 
+        docker container stop <container-name/ContainerID(First two letters are enough)>
+        start
+        pause
+        kill
+        restart
+        rm
+
+        docker --help
+
